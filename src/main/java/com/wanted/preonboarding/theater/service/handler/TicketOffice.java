@@ -12,8 +12,25 @@ public class TicketOffice {
         this.tickets = Arrays.asList(tickets);
     }
 
-    public Ticket getTicket(){
-        return tickets.get(0);
+    public TicketOffice(Long amount, List<Ticket> ticketList) {
+        this.amount = amount;
+        this.tickets = ticketList;
+    }
+
+    public Ticket publishTicket(int ticketId){
+        return getTicket(ticketId);
+    }
+
+    public void increaseSalesAmount(long amount){
+        plusAmount(amount);
+    }
+
+    // 티켓 리스트에서 ticketid 를 기준으로 한 조회
+    public Ticket getTicket(int ticketId){
+        var ticket = tickets.stream().filter(x -> x.getTicketId() == ticketId).findFirst();
+        if (!ticket.isPresent()) return null;
+        return ticket.get();
+
     }
 
     public void minusAmount(long amount) {
